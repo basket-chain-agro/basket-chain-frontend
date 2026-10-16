@@ -2,31 +2,31 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const products = [
-  { id: 'pretty-savas', name: 'Pretty Savas', seller: "Jake's Farm", location: 'Abuja', price: '₦24,000/20kg', image: 'photo-1550583724-b2692b85b150' },
-  { id: 'tomato-jos', name: 'Tomato Jos', seller: "John's Farm", location: 'Lagos', price: '₦50,000/140kg', image: 'photo-1546094096-0df4bcaaa337' },
-  { id: 'senkes-rice', name: 'Senkes Rice', seller: "John's Farm", location: 'Lagos', price: '₦70,000/Bag', image: 'photo-1586201375761-83865001e31c' },
-  { id: 'agric-fowl', name: 'Agric Fowl', seller: "Jeckerson's Farm", location: 'Calabar', price: '₦25,000/Fowl', image: 'photo-1548550023-2bdb3c5beed7' },
-  { id: 'golden-cow', name: 'Golden Cow', seller: "Ahmed's Farm", location: 'Benue', price: '₦1,100,000/270kg', image: 'photo-1516467508483-a7212febe31a' },
-  { id: 'royal-cocoa', name: 'Royal Cocoa', seller: "Ojong's Farm", location: 'Cross River', price: '₦45,000/25kg', image: 'photo-1589927986089-35812388d1f4' },
-  { id: 'arewa-goat', name: 'Arewa Goat', seller: "John's Farm", location: 'Makurdi', price: '₦95,000/30kg', image: 'photo-1524024973431-2ad916746881' },
-  { id: 'groundnuts', name: 'Groundnuts', seller: "Jeckerson's Farm", location: 'Calabar', price: '₦80,000/100kg', image: 'photo-1567892737950-30c4db37cd89' },
-  { id: 'large-yams', name: 'Large Yams', seller: "Chidi's Farm", location: 'Anambra', price: '₦120,000 for 100 Tubers', image: 'photo-1596097635121-14b63b7a0c19' },
-  { id: 'healthy-broilers', name: 'Healthy Broilers', seller: "Tunde' Poultry", location: 'Ogun', price: '₦8,500/Live Bird', image: 'photo-1548550023-2bdb3c5beed7' },
-  { id: 'polished-local-rice', name: 'Polished Local Rice', seller: 'Apakali Hub', location: 'Ebonyi', price: '₦72,000/50kg', image: 'photo-1586201375761-83865001e31c' },
-  { id: 'red-sokoto-goat', name: 'Red Sokoto Goat', seller: 'Danladi Ranches', location: 'Sokoto', price: '₦65,000/25kg', image: 'photo-1524024973431-2ad916746881' },
-  { id: 'sweet-potatoes', name: 'Sweet Potatoes', seller: 'Plateau Harvest', location: 'Jos', price: '₦40,000/Bag', image: 'photo-1596097635121-14b63b7a0c19' },
-  { id: 'export-grade-oranges', name: 'Export Grade Oranges', seller: 'Benue Orchard', location: 'Makurdi', price: '₦15,000/Basket', image: 'photo-1547514701-42782101795e' },
-  { id: 'smoked-catfish', name: 'Smoked Catfish', seller: 'Delta Aquaculture', location: 'Warri', price: '₦95,000/30kg', image: 'photo-1510130387422-82bed34b37e9' },
-  { id: 'fresh-habanero', name: 'Fresh Habanero (Atarodo)', seller: "Tunde' Poultry", location: 'Gombe', price: '₦18,000/Basket', image: 'photo-1588252303782-cb80119abd6d' },
+  { id: 'pretty-savas', name: 'Pretty Savas', seller: "Jake's Farm", location: 'Abuja', price: '₦24,000/20kg', image: '/images/pretty-savas.png' },
+  { id: 'tomato-jos', name: 'Tomato Jos', seller: "John's Farm", location: 'Lagos', price: '₦50,000/140kg', image: '/images/tomato-jos.png' },
+  { id: 'senkes-rice', name: 'Senkes Rice', seller: "John's Farm", location: 'Lagos', price: '₦70,000/Bag', image: '/images/senkes-rice.png' },
+  { id: 'agric-fowl', name: 'Agric Fowl', seller: "Jeckerson's Farm", location: 'Calabar', price: '₦25,000/Fowl', image: '/images/agric-fowl.png' },
+  { id: 'golden-cow', name: 'Golden Cow', seller: "Ahmed's Farm", location: 'Benue', price: '₦1,100,000/270kg', image: '/images/golden-cow.png' },
+  { id: 'royal-cocoa', name: 'Royal Cocoa', seller: "Ojong's Farm", location: 'Cross River', price: '₦45,000/25kg', image: '/images/royal-cocoa.png' },
+  { id: 'arewa-goat', name: 'Arewa Goat', seller: "John's Farm", location: 'Makurdi', price: '₦95,000/30kg', image: '/images/arewa-goat.png' },
+  { id: 'groundnuts', name: 'Groundnuts', seller: "Jeckerson's Farm", location: 'Calabar', price: '₦80,000/100kg', image: '/images/groundnuts.png' },
+  { id: 'large-yams', name: 'Large Yams', seller: "Chidi's Farm", location: 'Anambra', price: '₦120,000 for 100 Tubers', image: '/images/large-yams.png' },
+  { id: 'healthy-broilers', name: 'Healthy Broilers', seller: "Tunde' Poultry", location: 'Ogun', price: '₦8,500/Live Bird', image: '/images/healthy-broilers.png' },
+  { id: 'polished-local-rice', name: 'Polished Local Rice', seller: 'Apakali Hub', location: 'Ebonyi', price: '₦72,000/50kg', image: '/images/polished-local-rice.png' },
+  { id: 'red-sokoto-goat', name: 'Red Sokoto Goat', seller: 'Danladi Ranches', location: 'Sokoto', price: '₦65,000/25kg', image: '/images/red-sokoto-goat.png' },
+  { id: 'sweet-potatoes', name: 'Sweet Potatoes', seller: 'Plateau Harvest', location: 'Jos', price: '₦40,000/Bag', image: '/images/sweet-potatoes.png' },
+  { id: 'export-grade-oranges', name: 'Export Grade Oranges', seller: 'Benue Orchard', location: 'Makurdi', price: '₦15,000/Basket', image: '/images/export-grade-oranges.png' },
+  { id: 'smoked-catfish', name: 'Smoked Catfish', seller: 'Delta Aquaculture', location: 'Warri', price: '₦95,000/30kg', image: '/images/smoked-catfish.png' },
+  { id: 'fresh-habanero', name: 'Fresh Habanero (Atarodo)', seller: "Tunde' Poultry", location: 'Gombe', price: '₦18,000/Basket', image: '/images/fresh-habanero.png' },
 ];
 
 const initialWishlist = ['pretty-savas', 'tomato-jos', 'golden-cow', 'royal-cocoa'];
 
 const requestSeed = [
-  { id: 'req-1', productId: 'golden-cow', productName: 'Golden Cow', farmer: 'John Adebayo', quantity: '2', date: 'Dec 22, 2025', total: '₦3,500,000', status: 'Pending' },
-  { id: 'req-2', productId: 'arewa-goat', productName: 'Billy Goat', farmer: 'Chisom Ajah', quantity: '1', date: 'Dec 22, 2025', total: '₦500,000', status: 'Pending' },
-  { id: 'req-3', productId: 'healthy-broilers', productName: 'Pinkie Piglets', farmer: 'John Adebayo', quantity: '7', date: 'Dec 19, 2025', total: '₦2,670,000', status: 'Accepted' },
-  { id: 'req-4', productId: 'agric-fowl', productName: 'Native Fowl', farmer: 'Smith Richmond', quantity: '2', date: 'Nov 30, 2025', total: '₦45,000', status: 'Accepted' },
+  { id: 'req-1', productId: 'golden-cow', productName: 'Golden Cow', image: '/images/request-cow.png', farmer: 'John Adebayo', quantity: '2', date: 'Dec 22, 2025', total: '₦3,500,000', status: 'Pending' },
+  { id: 'req-2', productId: 'arewa-goat', productName: 'Billy Goat', image: '/images/request-goat.png', farmer: 'Chisom Ajah', quantity: '1', date: 'Dec 22, 2025', total: '₦500,000', status: 'Pending' },
+  { id: 'req-3', productId: 'healthy-broilers', productName: 'Pinkie Piglets', image: '/images/request-piglets.png', farmer: 'John Adebayo', quantity: '7', date: 'Dec 19, 2025', total: '₦2,670,000', status: 'Accepted' },
+  { id: 'req-4', productId: 'agric-fowl', productName: 'Native Fowl', image: '/images/request-native-fowl.png', farmer: 'Smith Richmond', quantity: '2', date: 'Nov 30, 2025', total: '₦45,000', status: 'Accepted' },
 ];
 
 const dashboardStats = [
@@ -72,9 +72,10 @@ function App() {
 
   return (
     <div className="app-shell">
-      <SideRail />
-      <div className="main-panel">
-        <TopBar />
+      <TopBar />
+      <div className="workspace">
+        <SideRail />
+        <div className="main-panel">
         <main className="main-content">
           {notice ? <div className="storage-note">{notice}</div> : null}
           <Routes>
@@ -87,6 +88,7 @@ function App() {
             <Route path="*" element={<DashboardPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
           </Routes>
         </main>
+        </div>
       </div>
     </div>
   );
@@ -139,7 +141,9 @@ function TopBar() {
       <div className="topbar-tools">
         <button className="icon-button" type="button" aria-label="Wishlist"><Icon name="heart" size={18} /></button>
         <button className="icon-button" type="button" aria-label="Notifications"><Icon name="bell" size={18} /></button>
-        <button className="avatar-circle" type="button" aria-label="Profile">R</button>
+        <button className="avatar-circle" type="button" aria-label="Profile">
+          <img src="/images/profile-avatar.png" alt="" />
+        </button>
       </div>
     </header>
   );
@@ -255,11 +259,10 @@ function RequestsPage() {
       ) : (
         <div className="request-list">
           {visible.map((request) => {
-            const product = products.find((prod) => prod.id === request.productId);
             return (
               <article className="request-card" key={request.id}>
                 <div className="request-thumb">
-                  {product ? <img src={productImage(product.image)} alt={product.name} /> : null}
+                  <img src={request.image} alt={request.productName} />
                 </div>
                 <div className="request-details">
                   <h2>{request.productName}</h2>
@@ -326,7 +329,7 @@ function ProductDetailPage({ savedIds, onToggleSaved }) {
     <section className="page detail-page">
       <Link className="back-link" to="/marketplace"><Icon name="back" size={16} /> Back to marketplace</Link>
       <div className="detail-card">
-        <img className="detail-image" src={productImage(product.image, 900)} alt={product.name} />
+        <img className="detail-image" src={product.image} alt={product.name} />
         <div className="detail-info">
           <p className="crumbs small"><span>Marketplace</span><span>›</span><span>View details</span></p>
           <h1>{product.name}</h1>
@@ -346,7 +349,7 @@ function ProductCard({ product, saved, onToggleSaved, compact = false }) {
   return (
     <article className={`product-card ${compact ? 'compact' : ''}`}>
       <div className="product-photo">
-        <img src={productImage(product.image)} alt={product.name} />
+        <img src={product.image} alt={product.name} />
         <button type="button" onClick={() => onToggleSaved(product.id)} className={`save-badge ${saved ? 'saved' : ''}`} aria-label={`${saved ? 'Remove from wishlist' : 'Save to wishlist'}`}>
           <Icon name="heart" size={14} fill={saved ? 'currentColor' : 'none'} />
         </button>
@@ -396,10 +399,6 @@ function Icon({ name, size = 18, fill = 'none' }) {
   };
 
   return <svg {...common}>{icons[name] || null}</svg>;
-}
-
-function productImage(id, width = 620) {
-  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`;
 }
 
 export default App;
