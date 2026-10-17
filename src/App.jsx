@@ -139,7 +139,7 @@ function TopBar() {
         <input aria-label="Search products" onChange={(event) => setQuery(event.target.value)} placeholder="Search products, farmers, location..." value={query} />
       </form>
       <div className="topbar-tools">
-        <button className="icon-button" type="button" aria-label="Wishlist"><Icon name="heart" size={18} /></button>
+        <button className="icon-button" type="button" aria-label="Wishlist" onClick={() => navigate('/wishlist')}><Icon name="heart" size={18} /></button>
         <button className="icon-button" type="button" aria-label="Notifications"><Icon name="bell" size={18} /></button>
         <button className="avatar-circle" type="button" aria-label="Profile">
           <img src="/images/profile-avatar.png" alt="" />
