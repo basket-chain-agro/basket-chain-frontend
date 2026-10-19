@@ -1,0 +1,570 @@
+/* Import the font used throughout the application. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+/* Define reusable colors and the default font. */
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #202820;
+  background: #f3f6f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --green: #27bf4c;
+  --green-dark: #139537;
+}
+
+/* Apply consistent sizing to all elements. */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove default body margins. */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Make form controls inherit the application font. */
+button, input, select {
+  font: inherit;
+}
+
+/* Show a pointer when hovering over buttons. */
+button {
+  cursor: pointer;
+}
+
+/* Center the registration card on the page. */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 24px 20px;
+}
+
+/* Create the main two-column registration card. */
+.signup-card {
+  width: min(1120px, 100%);
+  min-height: 610px;
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  background: #fff;
+  border: 1px solid #e8eee7;
+  border-radius: 22px;
+  padding: 14px;
+  box-shadow: 0 18px 55px rgba(34, 71, 39, 0.08);
+}
+
+/* Style the form column. */
+.form-panel {
+  padding: 28px clamp(22px, 4vw, 54px) 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Arrange the brand icon and text horizontally. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+  text-decoration: none;
+  color: #1e3624;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+  margin-bottom: 42px;
+}
+
+/* Style the green brand icon background. */
+.brand-mark {
+  display: grid;
+  place-items: center;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 11px;
+  background: var(--green);
+}
+
+/* Give the second part of the brand a softer color. */
+.brand-light {
+  color: #6b8c70;
+  font-weight: 500;
+}
+
+/* Arrange the three progress steps in a row. */
+.progress {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  width: 100%;
+}
+
+/* Give each progress step equal space. */
+.progress-step {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+/* Create the area containing each progress circle. */
+.step-line {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Draw the connecting line between progress circles. */
+.progress-step:not(:last-child) .step-line:after {
+  content: "";
+  height: 2px;
+  background: #e6ebe5;
+  position: absolute;
+  left: 25px;
+  right: 7px;
+  top: 11px;
+}
+
+/* Highlight connecting lines for completed steps. */
+.progress-step.active:not(:last-child) .step-line:after {
+  background: #a8e6b4;
+}
+
+/* Style the numbered progress circles. */
+.step-dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #e5eae4;
+  border-radius: 50%;
+  background: #f1f4f0;
+  color: #a4aca2;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Highlight the current and completed progress circles. */
+.progress-step.active .step-dot {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+/* Style the text below each progress circle. */
+.step-label {
+  display: block;
+  font-size: 10px;
+  color: #a0a89e;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+
+/* Highlight the labels of active steps. */
+.progress-step.active .step-label {
+  color: #268e3e;
+  font-weight: 700;
+}
+
+/* Style the main heading. */
+h1 {
+  margin: 0 0 8px;
+  color: #202820;
+  font-size: clamp(23px, 2.5vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -1.1px;
+  font-weight: 800;
+}
+
+/* Style the explanatory paragraph below the heading. */
+.intro {
+  margin: 0 0 24px;
+  color: #879087;
+  font-size: 12px;
+  line-height: 1.65;
+  max-width: 360px;
+}
+
+/* Arrange form fields vertically. */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+/* Make each input wrapper occupy the full width. */
+.field-wrap {
+  width: 100%;
+  position: relative;
+}
+
+/* Style text inputs and dropdowns. */
+.field-wrap input, .field-wrap select {
+  width: 100%;
+  min-height: 45px;
+  border: 1px solid #edf0eb;
+  border-radius: 9px;
+  background: #fbfcfa;
+  outline: none;
+  padding: 0 14px;
+  color: #263329;
+  font-size: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Style placeholder text. */
+.field-wrap input::placeholder {
+  color: #a9b0a7;
+}
+
+/* Highlight an input when the user focuses on it. */
+.field-wrap input:focus, .field-wrap select:focus {
+  border-color: #65d47d;
+  box-shadow: 0 0 0 3px rgba(39, 191, 76, 0.1);
+  background: white;
+}
+
+/* Highlight fields containing validation errors. */
+.field-wrap [aria-invalid="true"] {
+  border-color: #e66b6b;
+}
+
+/* Style labels above the inputs. */
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475248;
+  margin: 3px 0 -5px;
+  display: block;
+}
+
+/* Remove the browser's default dropdown arrow. */
+.select-wrap select {
+  appearance: none;
+  color: #a9b0a7;
+}
+
+/* Change the dropdown text color when a value is selected. */
+.select-wrap select:valid {
+  color: #263329;
+}
+
+/* Position the custom dropdown icon. */
+.select-wrap > svg {
+  position: absolute;
+  right: 13px;
+  top: 14px;
+  pointer-events: none;
+  color: #8c968b;
+}
+
+/* Display validation messages below their fields. */
+.error {
+  display: block;
+  color: #d74d4d;
+  font-size: 10px;
+  margin: 5px 2px 0;
+}
+
+/* Arrange the Back and Next buttons horizontally. */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 23px;
+}
+
+/* Style the main action button. */
+.next-button {
+  flex: 1;
+  min-height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 5px 12px rgba(39, 191, 76, 0.18);
+  transition: background 0.2s, transform 0.2s;
+}
+
+/* Add a hover effect to the main action button. */
+.next-button:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+}
+
+/* Style the Back button. */
+.back-button {
+  border: 1px solid #e7ece6;
+  background: white;
+  color: #667065;
+  border-radius: 999px;
+  padding: 0 22px;
+  min-height: 44px;
+  font-size: 12px;
+}
+
+/* Style the security message below the form. */
+.secure-note {
+  margin: 20px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #a0a89e;
+  font-size: 10px;
+}
+
+/* Create the small green dot in the security message. */
+.secure-note span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* Create the image column. */
+.visual-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 580px;
+  background: #e4eee1;
+}
+
+/* Make the image cover the entire image column. */
+.visual-panel > img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Add a dark gradient over the image for readable text. */
+.image-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12, 32, 14, 0) 42%, rgba(9, 28, 13, 0.72) 100%);
+}
+
+/* Position the text near the bottom of the image. */
+.image-caption {
+  position: absolute;
+  bottom: 52px;
+  left: clamp(22px, 4vw, 46px);
+  right: 28px;
+  color: white;
+}
+
+/* Style the small icon above the image caption. */
+.caption-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+/* Style the main text displayed over the image. */
+.image-caption p {
+  font-size: clamp(21px, 2.5vw, 31px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.7px;
+  max-width: 370px;
+  margin: 16px 0 8px;
+}
+
+/* Style the smaller caption below the main text. */
+.caption-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Position the image pagination indicators. */
+.image-pagination {
+  position: absolute;
+  bottom: 24px;
+  left: clamp(22px, 4vw, 46px);
+  display: flex;
+  gap: 6px;
+}
+
+/* Style the inactive pagination indicators. */
+.image-pagination span {
+  width: 7px;
+  height: 7px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* Highlight the pagination indicator for the current step. */
+.image-pagination span.current {
+  width: 22px;
+  background: #fff;
+}
+
+/* Display crop categories in a two-column grid. */
+.crop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+/* Style each crop category button. */
+.crop-option {
+  min-height: 45px;
+  border: 1px solid #edf0eb;
+  border-radius: 9px;
+  background: #fbfcfa;
+  color: #707a70;
+  font-size: 12px;
+}
+
+/* Highlight crop buttons on hover or when selected. */
+.crop-option:hover, .crop-option.selected {
+  border-color: var(--green);
+  background: #effbf1;
+  color: #188d36;
+  font-weight: 700;
+}
+
+/* Add space below the specific product label. */
+.crop-label {
+  margin-bottom: 9px;
+}
+
+/* Style the optional crop information message. */
+.privacy-note {
+  color: #99a197;
+  font-size: 10px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+/* Style the page footer. */
+footer {
+  margin-top: 22px;
+  text-align: center;
+  color: #98a196;
+  font-size: 10px;
+}
+
+/* Style the separator in the footer. */
+footer span {
+  padding: 0 5px;
+  color: var(--green);
+}
+
+/* Adjust the layout for tablets and mobile devices. */
+@media (max-width: 760px) {
+  .page {
+    padding: 16px 12px;
+    justify-content: flex-start;
+  }
+
+  .signup-card {
+    grid-template-columns: 1fr;
+    padding: 8px;
+    border-radius: 17px;
+    max-width: 500px;
+  }
+
+  .form-panel {
+    order: 1;
+    padding: 22px 18px 18px;
+  }
+
+  .visual-panel {
+    order: 0;
+    min-height: 210px;
+    height: 230px;
+    border-radius: 12px;
+  }
+
+  .image-caption {
+    bottom: 27px;
+    left: 22px;
+  }
+
+  .image-caption p {
+    font-size: 20px;
+    margin: 9px 0 4px;
+    max-width: 270px;
+  }
+
+  .caption-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .caption-icon svg {
+    width: 16px;
+  }
+
+  .caption-subtitle {
+    font-size: 10px;
+  }
+
+  .image-pagination {
+    bottom: 12px;
+    left: 22px;
+  }
+
+  .brand {
+    margin: 2px 0 26px;
+  }
+
+  .progress {
+    margin-bottom: 23px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .intro {
+    margin-bottom: 20px;
+  }
+
+  .visual-panel > img {
+    object-position: center 38%;
+  }
+
+  footer {
+    line-height: 1.6;
+    margin-top: 15px;
+  }
+}
+
+/* Improve spacing on very narrow mobile screens. */
+@media (max-width: 380px) {
+  .step-label {
+    font-size: 9px;
+  }
+
+  .form-panel {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+}
