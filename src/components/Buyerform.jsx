@@ -23,17 +23,40 @@ function Buyerform() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const [message, setMessage] = useState('')
+  const [errors, setErrors] = useState({})
 
-  function handleSubmit(event) {
+
+    function validate() {
+    const newErrors = {}
+
+    if (!fullName.trim()) newErrors.fullName = 'Full name is required'
+
+    if (!email.trim()) newErrors.email = 'Email is required'
+    else if (!/^\S+@\S+\.\S+$/.test(email)) newErrors.email = 'Enter a valid email address'
+
+    if (phone && !/^\+?[0-9\s-]{7,15}$/.test(phone)) newErrors.phone = 'Enter a valid phone number'
+
+    if (!location) newErrors.location = 'Please select your country'
+
+    if (!password) newErrors.password = 'Password is required'
+    else if (password.length < 8) newErrors.password = 'Password must be at least 8 characters'
+
+    if (!confirmPassword) newErrors.confirmPassword = 'Please confirm your password'
+    else if (password !== confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+
+    if (!agreedToTerms) newErrors.terms = 'You must agree to continue'
+
+    return newErrors
+  }
+
+    function handleSubmit(event) {
     event.preventDefault()
 
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
-      return
-    }
+    const newErrors = validate()
+    setErrors(newErrors)
+    if (Object.keys(newErrors).length > 0) return
 
     setMessage('Form submitted successfully!')
-    console.log({ fullName, email, phone, company, location, agreedToTerms })
   }
 
   return (
@@ -62,7 +85,7 @@ function Buyerform() {
             directly from verified farmers.
           </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="mb-4">
               <label htmlFor="fullName" className="block text-xs text-gray-700 mb-1">Full Name / Business Name</label>
               <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -87,6 +110,7 @@ function Buyerform() {
                 onChange={(event) => setEmail(event.target.value)}
                 required
               />
+                {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
             </div>
 
             <div className="mb-4">
@@ -99,6 +123,7 @@ function Buyerform() {
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
               />
+              {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>} 
             </div>
 
             <div className="mb-4">
@@ -129,6 +154,7 @@ function Buyerform() {
                   </option>
                 ))}
               </select>
+               {errors.location && <p className="text-xs text-red-500 mt-1">{errors.location}</p>}  
             </div>
 
             <div className="mb-4">
@@ -143,6 +169,7 @@ function Buyerform() {
                 minLength={8}
                 required
               />
+                {errors.password && <p className="text-xs text-red-500 mt-1">{errors.password}</p>} 
             </div>
 
             <div className="mb-4">
@@ -156,6 +183,7 @@ function Buyerform() {
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 required
               />
+                {errors.confirmPassword && <p className="text-xs text-red-500 mt-1">{errors.confirmPassword}</p>}
             </div>
 
             {/* Terms and Privacy Policy */}
@@ -168,6 +196,7 @@ function Buyerform() {
                 onChange={(event) => setAgreedToTerms(event.target.checked)}
                 required
               />
+              {errors.terms && <p className="text-xs text-red-500 mb-2">{errors.terms}</p>} 
               <label htmlFor="terms" className="text-xs text-gray-600 italic">
                 I agree to the Terms of Service &amp; Privacy Policy
               </label>
