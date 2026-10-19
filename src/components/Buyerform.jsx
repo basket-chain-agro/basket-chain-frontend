@@ -27,7 +27,6 @@ function Buyerform() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [agreedToTerms, setAgreedToTerms] = useState(false)
-  const [message, setMessage] = useState('')
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
@@ -92,7 +91,7 @@ function Buyerform() {
       </div>
 
       {/* Main row: form | image */}
-      <div className="grid grid-cols-[420px_1fr] items-start mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-[420px_1fr] items-start mt-6">
 
         {/* LEFT column: header + form */}
 
@@ -116,6 +115,7 @@ function Buyerform() {
                 onChange={(event) => setFullName(event.target.value)}
                 required
               />
+              {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>}
             </div>
 
             <div className="mb-4">
@@ -215,11 +215,11 @@ function Buyerform() {
                 onChange={(event) => setAgreedToTerms(event.target.checked)}
                 required
               />
-              {errors.terms && <p className="text-xs text-red-500 mb-2">{errors.terms}</p>} 
               <label htmlFor="terms" className="text-xs text-gray-600 italic">
                 I agree to the Terms of Service &amp; Privacy Policy
               </label>
             </div>
+             {errors.terms && <p className="text-xs text-red-500 mb-2">{errors.terms}</p>} 
 
             {/* Feedback message */}
             {submitError && <p className="text-sm text-red-500 mb-2">{submitError}</p>}
@@ -241,7 +241,7 @@ function Buyerform() {
         </div>
 
         {/* RIGHT column: image */}
-        <div className="flex items-center justify-center">
+        <div className="hidden md:flex items-center justify-center">
           <img
             className="w-full max-w-md max-h-[80vh] object-contain"
             src="/Fruit-basket.png"
