@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 const COUNTRIES = [
   ['nigeria', 'Nigeria'],
@@ -12,6 +14,9 @@ const COUNTRIES = [
   ['niger', 'Niger'],
   ['egypt', 'Egypt'],
 ]
+function mockRegister() {
+  return new Promise((resolve) => setTimeout(resolve, 1500))
+}
 
 function Buyerform() {
   const [fullName, setFullName] = useState('')
@@ -24,6 +29,9 @@ function Buyerform() {
   const [agreedToTerms, setAgreedToTerms] = useState(false)
   const [message, setMessage] = useState('')
   const [errors, setErrors] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const navigate = useNavigate()
 
 
     function validate() {
@@ -49,15 +57,26 @@ function Buyerform() {
     return newErrors
   }
 
-    function handleSubmit(event) {
-    event.preventDefault()
+   async function handleSubmit(event) {
+  event.preventDefault()
+  if (isLoading) return
 
-    const newErrors = validate()
-    setErrors(newErrors)
-    if (Object.keys(newErrors).length > 0) return
+  const newErrors = validate()
+  setErrors(newErrors)
+  if (Object.keys(newErrors).length > 0) return
 
-    setMessage('Form submitted successfully!')
+  setIsLoading(true)
+  setSubmitError('')
+
+  try {
+    await mockRegister()
+    navigate('/login')
+  } catch {
+    setSubmitError('Something went wrong. Please try again.')
+  } finally {
+    setIsLoading(false)
   }
+}
 
   return (
     <div className="bg-gray-50 min-h-screen p-6">
@@ -203,13 +222,20 @@ function Buyerform() {
             </div>
 
             {/* Feedback message */}
-            {message && <p>{message}</p>}
+            {submitError && <p className="text-sm text-red-500 mb-2">{submitError}</p>}
 
-            <button type="submit" className="w-full bg-green-500 text-white py-3 rounded-md text-sm font-semibold hover:bg-green-600 cursor-pointer mt-2">Create Account</button>
+            <button
+  type="submit"
+  disabled={isLoading}
+  className="w-full bg-green-500 text-white py-3 rounded-md text-sm font-semibold 
+  hover:bg-green-600 cursor-pointer mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
+
+  {isLoading ? 'Creating account...' : 'Create Account'}
+</button>
 
             <p className="text-xs text-gray-600 text-center mt-4">
               Already have an account?{" "}
-              <a href="/login" className="text-green-600 font-medium hover:underline">Log in</a>
+              <Link to="/login" className="text-green-600 font-medium hover:underline">Log in</Link>
             </p>
           </form>
         </div>
