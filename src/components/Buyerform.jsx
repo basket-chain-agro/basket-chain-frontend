@@ -1,0 +1,202 @@
+import { useState } from 'react'
+
+const COUNTRIES = [
+  ['nigeria', 'Nigeria'],
+  ['kenya', 'Kenya'],
+  ['ghana', 'Ghana'],
+  ['south-africa', 'South Africa'],
+  ['gambia', 'Gambia'],
+  ['cameroon', 'Cameroon'],
+  ['united-kingdom', 'United Kingdom'],
+  ['united-states', 'United States'],
+  ['niger', 'Niger'],
+  ['egypt', 'Egypt'],
+]
+
+function Buyerform() {
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [company, setCompany] = useState('')
+  const [location, setLocation] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [agreedToTerms, setAgreedToTerms] = useState(false)
+  const [message, setMessage] = useState('')
+
+  function handleSubmit(event) {
+    event.preventDefault()
+
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match')
+      return
+    }
+
+    setMessage('Form submitted successfully!')
+    console.log({ fullName, email, phone, company, location, agreedToTerms })
+  }
+
+  return (
+    <div className="bg-gray-50 min-h-screen p-6">
+
+      {/* Top row: Home button + Brand name */}
+      <div className="grid grid-cols-3 items-center">
+        <button className="justify-self-start bg-green-100 text-green-600 px-5 py-2 rounded-xl text-xs font-medium hover:bg-green-200 cursor-pointer">
+          ← Home
+        </button>
+        <h1 className="text-base font-medium text-gray-800 text-center">
+          Basket Chain
+        </h1>
+      </div>
+
+      {/* Main row: form | image */}
+      <div className="grid grid-cols-[420px_1fr] items-start mt-6">
+
+        {/* LEFT column: header + form */}
+
+        <div className="bg-white p-6 rounded-xl max-w-sm mx-auto w-full">
+          <h2 className="text-2xl font-semibold text-green-600 text-center mb-2">Create Buyer Account</h2>
+          <p className="text-sm text-gray-500 text-center mb-8">
+            Join our Marketplace and source quality produce
+            <br />
+            directly from verified farmers.
+          </p>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="fullName" className="block text-xs text-gray-700 mb-1">Full Name / Business Name</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Enter your name or business name"
+                value={fullName}
+                onChange={(event) => setFullName(event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-xs text-gray-700 mb-1">Email Address</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="yourname@mail.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="phone" className="block text-xs text-gray-700 mb-1">Phone Number</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+234 800 000 0000"
+                value={phone}
+                onChange={(event) => setPhone(event.target.value)}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="company" className="block text-xs text-gray-700 mb-1">Company/Organization (optional)</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="text"
+                id="company"
+                name="company"
+                placeholder="Your company name"
+                value={company}
+                onChange={(event) => setCompany(event.target.value)}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="location" className="block text-xs text-gray-700 mb-1">Location</label>
+              <select  className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                name="location"
+                id="location"
+                value={location}
+                onChange={(event) => setLocation(event.target.value)}
+                required
+              >
+                <option value="">Select your country</option>
+                {COUNTRIES.map(([value, label]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-xs text-gray-700 mb-1">Password</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Min 8 characters"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                minLength={8}
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block text-xs text-gray-700 mb-1">Confirm Password</label>
+              <input className="w-full bg-gray-50 border border-gray-200 rounded-md px-4 py-4 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Re-enter previous password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                required
+              />
+            </div>
+
+            {/* Terms and Privacy Policy */}
+            <div className="flex items-center gap-2 mb-4">
+              <input className="h-4 w-4 accent-green-500"
+                type="checkbox"
+                id="terms"
+                name="terms"
+                checked={agreedToTerms}
+                onChange={(event) => setAgreedToTerms(event.target.checked)}
+                required
+              />
+              <label htmlFor="terms" className="text-xs text-gray-600 italic">
+                I agree to the Terms of Service &amp; Privacy Policy
+              </label>
+            </div>
+
+            {/* Feedback message */}
+            {message && <p>{message}</p>}
+
+            <button type="submit" className="w-full bg-green-500 text-white py-3 rounded-md text-sm font-semibold hover:bg-green-600 cursor-pointer mt-2">Create Account</button>
+
+            <p className="text-xs text-gray-600 text-center mt-4">
+              Already have an account?{" "}
+              <a href="/login" className="text-green-600 font-medium hover:underline">Log in</a>
+            </p>
+          </form>
+        </div>
+
+        {/* RIGHT column: image */}
+        <div className="flex items-center justify-center">
+          <img
+            className="w-full max-w-md max-h-[80vh] object-contain"
+            src="/Fruit-basket.png"
+            alt="A man holding a basket of fruits"
+          />
+        </div>
+
+      </div>
+    </div>
+  )
+}
+
+export default Buyerform
