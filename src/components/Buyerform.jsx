@@ -82,9 +82,9 @@ function Buyerform() {
 
       {/* Top row: Home button + Brand name */}
       <div className="grid grid-cols-3 items-center">
-        <button className="justify-self-start bg-green-100 text-green-600 px-5 py-2 rounded-xl text-xs font-medium hover:bg-green-200 cursor-pointer">
+        <Link className="justify-self-start bg-green-100 text-green-600 px-5 py-2 rounded-xl text-xs font-medium hover:bg-green-200 cursor-pointer">
           ← Home
-        </button>
+        </Link>
         <h1 className="text-base font-medium text-gray-800 text-center">
           Basket Chain
         </h1>
@@ -227,7 +227,7 @@ function Buyerform() {
             <button
   type="submit"
   disabled={isLoading}
-  className="w-full bg-green-500 text-white py-3 rounded-md text-sm font-semibold 
+  className="w-full bg-green-500 text-white py-3 rounded-xl text-sm font-semibold 
   hover:bg-green-600 cursor-pointer mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
 
   {isLoading ? 'Creating account...' : 'Create Account'}
