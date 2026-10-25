@@ -20,6 +20,17 @@ const products = [
   { id: 'fresh-habanero', name: 'Fresh Habanero (Atarodo)', seller: "Tunde' Poultry", location: 'Gombe', price: '₦18,000/Basket', image: '/images/fresh-habanero.png' },
 ];
 
+const sellerProductsSeed = [
+  { id: 'pretty-savas-1', name: 'Pretty Savas', code: '#BNU-YAM-2026-001', quantity: '4,500 Tubers', price: '₦2,500', unit: 'Tuber', image: '/images/pretty-savas.png', category: 'Tubers & Roots', description: '', minimumOrder: '20', totalQuantity: '4500', harvestDate: '', shelfLife: '', storage: 'Dry Storage', packaging: 'Sacks/Bag', pickupLocation: 'After Zimbabwe, Bogobri, Cross River', delivery: true, deliveryRadius: 'Within 100km', status: 'Active' },
+  { id: 'tomato-jos-1', name: 'Tomato Jos', code: '#BNU-TOM-2026-002', quantity: '500kg', price: '₦52,500', unit: '100KG', image: '/images/tomato-jos.png', category: 'Vegetables', description: '', minimumOrder: '5', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Room Temperature', packaging: 'Crates', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+  { id: 'senkes-rice-1', name: 'Senkes Rice', code: '#BNU-SNKR-2026-002', quantity: '500kg', price: '₦70,000', unit: 'Bag', image: '/images/senkes-rice.png', category: 'Grains & Cereals', description: '', minimumOrder: '5', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Dry Storage', packaging: 'Sacks/Bag', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+  { id: 'agric-fowl-1', name: 'Agric Fowl', code: '#BNU-AGF-2026-002', quantity: '500', price: '₦25,000', unit: 'Fowl', image: '/images/agric-fowl.png', category: 'Livestock Products', description: '', minimumOrder: '1', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Room Temperature', packaging: 'Custom Packaging', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+  { id: 'pretty-savas-2', name: 'Pretty Savas', code: '#BNU-YAM-2026-001', quantity: '4,500 Tubers', price: '₦2,500', unit: 'Tuber', image: '/images/pretty-savas.png', category: 'Tubers & Roots', description: '', minimumOrder: '20', totalQuantity: '4500', harvestDate: '', shelfLife: '', storage: 'Dry Storage', packaging: 'Sacks/Bag', pickupLocation: 'After Zimbabwe, Bogobri, Cross River', delivery: true, deliveryRadius: 'Within 100km', status: 'Active' },
+  { id: 'tomato-jos-2', name: 'Tomato Jos', code: '#BNU-TOM-2026-002', quantity: '500kg', price: '₦52,500', unit: '100KG', image: '/images/tomato-jos.png', category: 'Vegetables', description: '', minimumOrder: '5', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Room Temperature', packaging: 'Crates', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+  { id: 'senkes-rice-2', name: 'Senkes Rice', code: '#BNU-SNKR-2026-002', quantity: '500kg', price: '₦70,000', unit: 'Bag', image: '/images/senkes-rice.png', category: 'Grains & Cereals', description: '', minimumOrder: '5', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Dry Storage', packaging: 'Sacks/Bag', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+  { id: 'agric-fowl-2', name: 'Agric Fowl', code: '#BNU-AGF-2026-002', quantity: '500', price: '₦25,000', unit: 'Fowl', image: '/images/agric-fowl.png', category: 'Livestock Products', description: '', minimumOrder: '1', totalQuantity: '500', harvestDate: '', shelfLife: '', storage: 'Room Temperature', packaging: 'Custom Packaging', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active' },
+];
+
 const initialWishlist = ['pretty-savas', 'tomato-jos', 'golden-cow', 'royal-cocoa'];
 
 const requestSeed = [
@@ -52,38 +63,66 @@ function readWishlist() {
   }
 }
 
+function readSellerProducts() {
+  try {
+    const raw = window.localStorage.getItem('basket-chain-seller-products');
+    return raw ? JSON.parse(raw) : sellerProductsSeed;
+  } catch (error) {
+    console.error('Could not read product listings', error);
+    return sellerProductsSeed;
+  }
+}
+
 function App() {
   const [savedIds, setSavedIds] = useState(readWishlist);
-  const [notice, setNotice] = useState('');
+  const [sellerProducts, setSellerProducts] = useState(readSellerProducts);
+  const [wishlistNotice, setWishlistNotice] = useState('');
+  const [listingNotice, setListingNotice] = useState('');
+  const location = useLocation();
+  const sellerMode = location.pathname.startsWith('/my-products');
+  const sellerFormMode = sellerMode && location.pathname !== '/my-products';
 
   useEffect(() => {
     try {
       window.localStorage.setItem('basket-chain-wishlist', JSON.stringify(savedIds));
-      setNotice('');
+      setWishlistNotice('');
     } catch (error) {
       console.error('Could not save wishlist', error);
-      setNotice('Wishlist could not be saved on this device.');
+      setWishlistNotice('Wishlist could not be saved on this device.');
     }
   }, [savedIds]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem('basket-chain-seller-products', JSON.stringify(sellerProducts));
+      setListingNotice('');
+    } catch (error) {
+      console.error('Could not save product listings', error);
+      setListingNotice('Product listings could not be saved on this device.');
+    }
+  }, [sellerProducts]);
 
   const toggleSaved = (id) => {
     setSavedIds((current) => current.includes(id) ? current.filter((entry) => entry !== id) : [...current, id]);
   };
 
   return (
-    <div className="app-shell">
-      <TopBar />
+    <div className={`app-shell ${sellerMode ? 'seller-app' : ''} ${sellerFormMode ? 'seller-form-app' : ''}`}>
+      {!sellerFormMode ? <TopBar sellerMode={sellerMode} /> : null}
       <div className="workspace">
-        <SideRail />
+        {!sellerFormMode ? <SideRail sellerMode={sellerMode} /> : null}
         <div className="main-panel">
         <main className="main-content">
-          {notice ? <div className="storage-note">{notice}</div> : null}
+          {wishlistNotice || listingNotice ? <div className="storage-note">{wishlistNotice || listingNotice}</div> : null}
           <Routes>
             <Route path="/" element={<DashboardPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
             <Route path="/dashboard" element={<DashboardPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
             <Route path="/marketplace" element={<MarketplacePage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
             <Route path="/orders" element={<RequestsPage />} />
             <Route path="/wishlist" element={<WishlistPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
+            <Route path="/my-products" element={<MyProductsPage products={sellerProducts} />} />
+            <Route path="/my-products/new" element={<ProductFormPage products={sellerProducts} onSave={setSellerProducts} />} />
+            <Route path="/my-products/:productId/edit" element={<ProductFormPage products={sellerProducts} onSave={setSellerProducts} />} />
             <Route path="/products/:productId" element={<ProductDetailPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
             <Route path="*" element={<DashboardPage savedIds={savedIds} onToggleSaved={toggleSaved} />} />
           </Routes>
@@ -94,8 +133,14 @@ function App() {
   );
 }
 
-function SideRail() {
-  const items = [
+function SideRail({ sellerMode = false }) {
+  const items = sellerMode ? [
+    { icon: 'dashboard', to: '/dashboard', label: 'Dashboard' },
+    { icon: 'produce', to: '/my-products', label: 'Produce' },
+    { icon: 'orders', to: '/orders', label: 'Requests' },
+    { icon: 'marketplace', to: '/marketplace', label: 'Orders' },
+    { icon: 'wallet', to: '/marketplace', label: 'Wallet' },
+  ] : [
     { icon: 'dashboard', to: '/dashboard', label: 'Dashboard' },
     { icon: 'marketplace', to: '/marketplace', label: 'Marketplace' },
     { icon: 'orders', to: '/orders', label: 'Requests' },
@@ -107,10 +152,11 @@ function SideRail() {
 
   return (
     <aside className="side-rail" aria-label="Sidebar navigation">
-      <nav className="rail-nav">
+      <nav className={`rail-nav ${sellerMode ? 'seller-rail-nav' : ''}`}>
         {items.map((item) => (
-          <NavLink key={item.label} to={item.to} className={({ isActive }) => `rail-button ${isActive ? 'active' : ''}`} title={item.label} aria-label={item.label}>
+          <NavLink key={item.label} to={item.to} end={item.to === '/my-products'} className={({ isActive }) => `rail-button ${isActive ? 'active' : ''}`} title={item.label} aria-label={item.label}>
             <Icon name={item.icon} size={21} />
+            {sellerMode ? <span>{item.label}</span> : null}
           </NavLink>
         ))}
         <button className="rail-button logout" type="button" title="Logout" aria-label="Logout">
@@ -121,7 +167,7 @@ function SideRail() {
   );
 }
 
-function TopBar() {
+function TopBar({ sellerMode = false }) {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
@@ -133,19 +179,163 @@ function TopBar() {
 
   return (
     <header className="topbar">
-      <div className="brand">Basket Chain</div>
+      <div className={`brand ${sellerMode ? 'seller-brand' : ''}`}>{sellerMode ? 'BC' : 'Basket Chain'}</div>
       <form className="search-box" onSubmit={handleSubmit}>
         <Icon name="search" size={16} />
         <input aria-label="Search products" onChange={(event) => setQuery(event.target.value)} placeholder="Search products, farmers, location..." value={query} />
       </form>
-      <div className="topbar-tools">
-        <button className="icon-button" type="button" aria-label="Wishlist" onClick={() => navigate('/wishlist')}><Icon name="heart" size={18} /></button>
+      <div className={`topbar-tools ${sellerMode ? 'seller-topbar-tools' : ''}`}>
+        {!sellerMode ? <button className="icon-button" type="button" aria-label="Wishlist" onClick={() => navigate('/wishlist')}><Icon name="heart" size={18} /></button> : null}
         <button className="icon-button" type="button" aria-label="Notifications"><Icon name="bell" size={18} /></button>
         <button className="avatar-circle" type="button" aria-label="Profile">
           <img src="/images/profile-avatar.png" alt="" />
         </button>
       </div>
     </header>
+  );
+}
+
+function MyProductsPage({ products: listings }) {
+  return (
+    <section className="page my-products-page">
+      <div className="my-products-heading">
+        <div>
+          <h1>My Produce</h1>
+          <p>Manage your listings and stock levels</p>
+        </div>
+        <Link className="add-product-button" to="/my-products/new"><span aria-hidden="true">+</span> Add New Product</Link>
+      </div>
+      <div className="seller-product-grid">
+        {listings.map((product) => (
+          <article className="seller-product-card" key={product.id}>
+            <div className="seller-product-image-wrap">
+              <img className="seller-product-image" src={product.image} alt={product.name} />
+            </div>
+            <div className="seller-product-info">
+              <div className="seller-product-name">
+                <h2>{product.name}</h2>
+                <span className="seller-status">{product.status}</span>
+              </div>
+              <div className="seller-product-code">
+                <span>{product.code}</span>
+                <button type="button" aria-label={`Copy ${product.name} listing code`} onClick={() => navigator.clipboard?.writeText(product.code)}><Icon name="copy" size={12} /></button>
+              </div>
+              <p className="seller-quantity">{product.quantity} Available</p>
+              <p className="seller-price">{product.price} / {product.unit}</p>
+              <Link className="edit-product-button" to={`/my-products/${product.id}/edit`}>Edit Details</Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const categoryOptions = ['Vegetables', 'Fruits', 'Grains & Cereals', 'Tubers & Roots', 'Nuts & Seeds', 'Herbs & Spices', 'Livestock Products', 'Other'];
+const storageOptions = ['Room Temperature', 'Cold Storage', 'Refrigerated', 'Frozen', 'Dry Storage'];
+const packagingOptions = ['Crates', 'Sacks/Bag', 'Cartons', 'Loose', 'Custom Packaging'];
+const deliveryRadiusOptions = ['Within 10km', 'Within 25km', 'Within 50km', 'Within 100km', 'Above 100km'];
+const emptyProduct = {
+  name: '', code: '#BNU-NEW-2026-001', quantity: '', price: '', unit: 'Unit', image: '/images/pretty-savas.png',
+  category: '', description: '', minimumOrder: '', totalQuantity: '', harvestDate: '', shelfLife: '',
+  storage: '', packaging: '', pickupLocation: '', delivery: true, deliveryRadius: '', status: 'Active',
+};
+
+function ProductFormPage({ products, onSave }) {
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const existingProduct = products.find((product) => product.id === productId);
+  const editing = Boolean(productId);
+  const [form, setForm] = useState(() => existingProduct ? { ...existingProduct } : { ...emptyProduct });
+  const [showDelete, setShowDelete] = useState(false);
+
+  if (editing && !existingProduct) {
+    return <div className="page"><div className="no-results"><h2>Product not found</h2><p>This listing is no longer available.</p><Link className="browse-button" to="/my-products">Back to My Produce</Link></div></div>;
+  }
+
+  const update = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }));
+  const save = (status) => (event) => {
+    event.preventDefault();
+    const quantitySuffix = editing
+      ? existingProduct.quantity.replace(/^[\d,]+/, '')
+      : form.unit ? ` ${form.unit}` : '';
+    const quantity = form.totalQuantity
+      ? `${Number(form.totalQuantity).toLocaleString()}${quantitySuffix}`
+      : form.quantity;
+    const updated = { ...form, status, quantity };
+    onSave((current) => editing
+      ? current.map((product) => product.id === productId ? updated : product)
+      : [{ ...updated, id: `product-${Date.now()}` }, ...current]);
+    navigate('/my-products');
+  };
+  const deleteProduct = () => {
+    onSave((current) => current.filter((product) => product.id !== productId));
+    navigate('/my-products');
+  };
+
+  return (
+    <section className="page product-form-page">
+      <div className="form-crumbs"><Link to="/my-products">Home</Link><span>›</span><Link to="/my-products">My Products</Link><span>›</span><span>{editing ? 'Edit Product' : 'Add New Product'}</span></div>
+      <div className="product-form-title">
+        <div>
+          <h1>{editing ? 'Edit Product' : 'Add New Product'}</h1>
+          <p>{editing ? 'Update your product listing details' : 'Fill in your product details to list it on the marketplace'}</p>
+        </div>
+        {editing ? <span className="seller-status">{form.status}</span> : null}
+      </div>
+      <form className="product-details-form" onSubmit={save(editing ? form.status : 'Active')}>
+        <FormSection title="Basic Information">
+          <FormField label="Product Name" required><input required value={form.name} onChange={update('name')} placeholder="e.g., Fresh Red Tomatoes" /></FormField>
+          <FormField label="Product Category" required><select required value={form.category} onChange={update('category')}><option value="">Select a Category</option>{categoryOptions.map((option) => <option key={option}>{option}</option>)}</select></FormField>
+          <FormField label="Product Description" required wide><textarea required value={form.description} onChange={update('description')} placeholder="Describe your product — quality, how it was grown, ideal use cases..." rows="3" /></FormField>
+        </FormSection>
+        <FormSection title="Pricing & Quantity">
+          <FormField label="Price per Unit" required><div className="form-input-prefix"><span>₦</span><input required value={form.price.replace(/[₦,]/g, '')} onChange={(event) => setForm((current) => ({ ...current, price: `₦${event.target.value}` }))} placeholder="0.00" inputMode="decimal" /></div></FormField>
+          <FormField label="Minimum Order Quantity" required hint="Minimum Amount a Buyer can Request"><input required type="number" min="1" value={form.minimumOrder} onChange={update('minimumOrder')} placeholder="e.g., 5" /></FormField>
+          <FormField label="Total Available Quantity" required hint="Total stock you currently have available"><input required type="number" min="1" value={form.totalQuantity} onChange={update('totalQuantity')} placeholder="e.g., 500" /></FormField>
+        </FormSection>
+        <FormSection title="Product Details">
+          <FormField label="Harvest Date"><input type="date" value={form.harvestDate} onChange={update('harvestDate')} /></FormField>
+          <FormField label="Estimated Shelf Life" hint="How long product stays fresh"><input value={form.shelfLife} onChange={update('shelfLife')} placeholder="e.g., 2 weeks" /></FormField>
+          <FormField label="Storage Method"><select value={form.storage} onChange={update('storage')}><option value="">Select an Option</option>{storageOptions.map((option) => <option key={option}>{option}</option>)}</select></FormField>
+          <FormField label="Packaging"><select value={form.packaging} onChange={update('packaging')}><option value="">Select an Option</option>{packagingOptions.map((option) => <option key={option}>{option}</option>)}</select></FormField>
+        </FormSection>
+        <FormSection title="Location & Delivery">
+          <FormField label="Pickup Location"><div className="form-input-prefix"><Icon name="pin" size={14} /><input value={form.pickupLocation} onChange={update('pickupLocation')} placeholder="Enter Farm Address or Nearest City" /></div></FormField>
+          <FormField label="Can you arrange Delivery"><div className="delivery-options"><label><input type="radio" checked={form.delivery} onChange={() => setForm((current) => ({ ...current, delivery: true }))} /> Yes, I can deliver</label><label><input type="radio" checked={!form.delivery} onChange={() => setForm((current) => ({ ...current, delivery: false }))} /> No, buyer arranges pickup</label></div></FormField>
+          <FormField label="Delivery Radius"><select value={form.deliveryRadius} onChange={update('deliveryRadius')}><option value="">Select an Option</option>{deliveryRadiusOptions.map((option) => <option key={option}>{option}</option>)}</select></FormField>
+        </FormSection>
+        <div className="product-form-actions">
+          {editing ? <button className="delete-product-button" type="button" onClick={() => setShowDelete(true)}>Delete Product</button> : <button className="draft-product-button" type="button" onClick={save('Draft')}>Save as Draft</button>}
+          <button className="publish-product-button" type="submit">{editing ? 'Save Changes' : 'Publish Product'}</button>
+        </div>
+      </form>
+      {showDelete ? <DeleteProductDialog productName={form.name} onCancel={() => setShowDelete(false)} onConfirm={deleteProduct} /> : null}
+    </section>
+  );
+}
+
+function FormSection({ title, children }) {
+  return <section className="form-section"><h2>{title}</h2><div className="form-grid">{children}</div></section>;
+}
+
+function FormField({ label, required = false, hint, wide = false, children }) {
+  return <label className={`form-field ${wide ? 'wide' : ''}`}><span>{label}{required ? <b> *</b> : null}</span>{children}{hint ? <small>{hint}</small> : null}</label>;
+}
+
+function DeleteProductDialog({ productName, onCancel, onConfirm }) {
+  return (
+    <div className="delete-dialog-backdrop" role="presentation">
+      <section className="delete-dialog" role="alertdialog" aria-modal="true" aria-labelledby="delete-title" aria-describedby="delete-description">
+        <span className="delete-icon"><Icon name="trash" size={38} /></span>
+        <h2 id="delete-title">Delete Product?</h2>
+        <p id="delete-description">This will permanently remove {productName} from the marketplace. This action cannot be undone.</p>
+        <div className="delete-dialog-actions">
+          <button type="button" onClick={onCancel}>Cancel</button>
+          <button type="button" onClick={onConfirm}>Yes, Delete</button>
+        </div>
+      </section>
+    </div>
   );
 }
 
@@ -384,7 +574,11 @@ function Icon({ name, size = 18, fill = 'none' }) {
   const icons = {
     dashboard: <><rect x="4" y="4" width="6" height="6" rx="1.5" /><rect x="14" y="4" width="6" height="3.6" rx="1" /><rect x="14" y="10" width="6" height="10" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1.5" /></>,
     marketplace: <><path d="M4 9h16l-1.3 9.4a2 2 0 0 1-2 1.6H7.3a2 2 0 0 1-2-1.6L4 9Z" /><path d="M7.5 9V7.5A4.5 4.5 0 0 1 12 3a4.5 4.5 0 0 1 4.5 4.5V9" /></>,
+    produce: <><path d="M12 21c-4.2-2.4-6.3-5.4-6.3-9.2A5.3 5.3 0 0 1 11 6.5c0 3.1.3 5.2 1 7.2.6-3.6 2.3-5.8 5.4-7.2 1.2 5.9-.6 11.4-5.4 14.5Z" /><path d="M12 14c-.5-3.7-2.4-6-5.3-7.1" /></>,
     orders: <><rect x="5" y="3.5" width="14" height="17" rx="2" /><path d="M9 9h6M9 13h6M9 17h4" /></>,
+    wallet: <><rect x="4" y="6" width="16" height="14" rx="2" /><path d="M4 9h16M7 6V4h10v2m-1 7h.01" /></>,
+    copy: <><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" /></>,
+    trash: <><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3" /></>,
     heart: <path d="M12 20.2 4.9 13a4.8 4.8 0 0 1 6.8-6.8L12 6.5l.3-.3a4.8 4.8 0 1 1 6.8 6.8L12 20.2Z" />,
     chat: <><path d="M5 18.5V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7A2.5 2.5 0 0 1 16.5 16H9l-4 2.5Z" /><path d="M8 9h8M8 12h5" /></>,
     settings: <><circle cx="12" cy="12" r="3.5" /><path d="M19 12a7.5 7.5 0 0 0-.1-1l2-1.5-1.8-3.1-2.3 1a7.3 7.3 0 0 0-1.7-1V2.8H9.9v2.5a7.3 7.3 0 0 0-1.7 1l-2.3-1L4.1 9.5l2 1.5a7.5 7.5 0 0 0 0 2l-2 1.5 1.8 3.1 2.3-1a7.3 7.3 0 0 0 1.7 1v2.5h2.2v-2.5a7.3 7.3 0 0 0 1.7-1l2.3 1 1.8-3.1-2-1.5Z" /></>,
