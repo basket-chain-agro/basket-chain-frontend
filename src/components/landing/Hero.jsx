@@ -76,7 +76,7 @@ export default function Hero() {
           </Button>
 
           <Button
-            to={ROUTES.marketplace}
+            to={ROUTES.login}
             variant="secondary"
             className="border-0 text-xs text-gray-400 sm:text-sm"
           >

@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import BuyerDashboard from "../pages/BuyerDashboard";
 import LandingPage from "../pages/LandingPage";
-import Login from "../pages/Login"
+import Login from "../pages/farmer-registration"
 import BuyerRegistration from "../components/buyer-registration";
 import BuyerLogin from "../components/buyer-login";
 import { ROUTES } from "../constants/routes";

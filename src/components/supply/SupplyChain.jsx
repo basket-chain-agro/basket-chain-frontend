@@ -36,7 +36,7 @@ export const SupplyChain = () => {
             </Link>
 
             <Link
-              to={ROUTES.marketplace}
+              to={ROUTES.login}
               className="hidden items-center justify-center rounded-full px-7 py-2.5 text-sm font-semibold text-gray-400 transition duration-300 hover:bg-[#04BE14] hover:text-white sm:inline-flex sm:w-auto"
             >
               Source Verified Crops
