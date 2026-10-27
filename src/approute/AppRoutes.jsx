@@ -1,10 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import BuyerDashboard from "../pages/BuyerDashboard";
+import Header from "../components/landing/Header";
+import Hero from "../components/landing/Hero";
+import Cycle from "../components/cycle/Cycle";
+import { TrustVerification } from "../components/trust/TrustVerification";
+import { HowitWorks } from "../components/howitworks/HowitWorks";
+import { SupplyChain } from "../components/supply/SupplyChain";
+import Footer from "../components/footer/Footer";
 
-export default function AppRoutes() {
+export default function LandingPage() {
   return (
-    <Routes>
-      <Route path="/" element={<BuyerDashboard />} />
-    </Routes>
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <Hero />
+        <Cycle />
+        <TrustVerification />
+        <HowitWorks />
+        <SupplyChain />
+        <Footer />
+      </main>
+    </div>
   );
 }
