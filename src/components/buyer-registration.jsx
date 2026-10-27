@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
 
 
 const COUNTRIES = [
@@ -69,7 +70,7 @@ function Buyerform() {
 
   try {
     await mockRegister()
-    navigate('/login')
+    navigate(ROUTES.dashboard)
   } catch {
     setSubmitError('Something went wrong. Please try again.')
   } finally {
@@ -82,7 +83,7 @@ function Buyerform() {
 
       {/* Top row: Home button + Brand name */}
       <div className="grid grid-cols-3 items-center">
-        <Link className="justify-self-start bg-green-100 text-green-600 px-5 py-2 rounded-xl text-xs font-medium hover:bg-green-200 cursor-pointer">
+        <Link to={ROUTES.home} className="justify-self-start bg-green-100 text-green-600 px-5 py-2 rounded-xl text-xs font-medium hover:bg-green-200 cursor-pointer">
           ← Home
         </Link>
         <h1 className="text-base font-medium text-gray-800 text-center">
@@ -235,7 +236,7 @@ function Buyerform() {
 
             <p className="text-xs text-gray-600 text-center mt-4">
               Already have an account?{" "}
-              <Link to="/login" className="text-green-600 font-medium hover:underline">Log in</Link>
+              <Link to={ROUTES.login} className="text-green-600 font-medium hover:underline">Log in</Link>
             </p>
           </form>
         </div>

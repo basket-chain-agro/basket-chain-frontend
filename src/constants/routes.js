@@ -1,6 +1,7 @@
 export const ROUTES = {
-  home: "/home",
+  home: "/",
+  dashboard: "/dashboard",
   marketplace: "/marketplace",
-  register: "/register",
-  login: "/login",
+  register: "/buyer-registration",
+  login: "/buyer-login",
 };
