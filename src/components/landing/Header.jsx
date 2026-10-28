@@ -52,7 +52,7 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Button
-            to={ROUTES.marketplace}
+            to={ROUTES.login}
             variant="secondary"
             className="text-xs border-0"
           >
@@ -81,7 +81,7 @@ export default function Header() {
             ))}
           </nav>
           <div className="mt-4 flex flex-col gap-3">
-            <Button to={ROUTES.marketplace} variant="secondary" onClick={close}>
+            <Button to={ROUTES.login} variant="secondary" onClick={close}>
               Source Verified Crops
             </Button>
             <Button to={ROUTES.register} onClick={close}>

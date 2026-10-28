@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import countrysideworkers from "../../assets/images/countrysideworkers.png";
+import { ROUTES } from "../../constants/routes";
 
 export const SupplyChain = () => {
   return (
@@ -20,14 +21,14 @@ export const SupplyChain = () => {
           {/* BUTTONS: side by side on mobile (Login / Sign Up), original labels from sm up */}
           <div className="mt-5 flex flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
-              to="/login"
+              to={ROUTES.login}
               className="inline-flex flex-1 items-center justify-center rounded-full bg-green-50 px-5 py-2.5 text-xs font-semibold text-[#04BE14] transition duration-300 hover:bg-[#04BE14] hover:text-white sm:hidden"
             >
               Login
             </Link>
 
             <Link
-              to="/register"
+              to={ROUTES.register}
               className="inline-flex flex-1 items-center justify-center rounded-full bg-[#04BE14] px-5 py-2.5 text-xs font-light text-white transition duration-300 hover:bg-[#04be23e6] sm:w-auto sm:flex-none sm:px-7 sm:text-sm"
             >
               <span className="sm:hidden">Sign Up</span>
@@ -35,7 +36,7 @@ export const SupplyChain = () => {
             </Link>
 
             <Link
-              to="/"
+              to={ROUTES.login}
               className="hidden items-center justify-center rounded-full px-7 py-2.5 text-sm font-semibold text-gray-400 transition duration-300 hover:bg-[#04BE14] hover:text-white sm:inline-flex sm:w-auto"
             >
               Source Verified Crops

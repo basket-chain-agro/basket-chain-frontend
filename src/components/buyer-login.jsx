@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
 
 // MOCK ONLY: replace with the real API call once the backend is ready
 function mockLogin(email, password) {
@@ -38,7 +39,7 @@ function Login() {
     }
    try {
     await mockLogin(email, password)
-    navigate('/dashboard')
+    navigate(ROUTES.dashboard)
   } catch {
     setError('Login failed. Please check your details and try again.')
   } finally {
@@ -51,7 +52,7 @@ function Login() {
 
       {/* Top row: Home button + Brand name */}
       <div className="grid grid-cols-3 items-center">
-        <Link to ="/"  className="justify-self-start bg-green-200 text-green-600 px-5 py-2 rounded-xl text-base font-medium hover:bg-green-300 cursor-pointer">
+        <Link to={ROUTES.home} className="justify-self-start bg-green-200 text-green-600 px-5 py-2 rounded-xl text-base font-medium hover:bg-green-300 cursor-pointer">
           ← Home
         </Link>
         <h1 className="text-xl font-medium text-gray-800 text-center">
@@ -124,12 +125,12 @@ function Login() {
               type="submit"
               className="w-full bg-green-600 text-white py-4 rounded-xl text-base font-semibold hover:bg-green-700 cursor-pointer"
             >
-              Create Account
+              Login
             </button>
 
             <p className="text-sm text-gray-500 text-center mt-5">
               New User?{" "}
-              <Link to="/register" className="text-green-600 font-semibold hover:underline">
+              <Link to={ROUTES.register} className="text-green-600 font-semibold hover:underline">
                Sign up
              </Link>
             </p>
