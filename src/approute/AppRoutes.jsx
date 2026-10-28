@@ -2,34 +2,29 @@ import { Routes, Route } from "react-router-dom";
 
 import BuyerDashboard from "../pages/BuyerDashboard";
 import LandingPage from "../pages/LandingPage";
-import Login from "../pages/Login";
 import AdminDashboard from "../pages/AdminDashboard";
-import Login from "../pages/farmer-registration"
-import BuyerRegistration from "../components/buyer-registration";
+import FarmerRegistration from "../pages/farmer-registration";
+import BuyerForm from "../components/buyer-registration";
 import BuyerLogin from "../components/buyer-login";
 import { ROUTES } from "../constants/routes";
-
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/Login" element={<Login />} />
-      <Route path="/" element={<BuyerDashboard />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<LandingPage />} />
-      <Route path="/Buyerform" element={<Buyerform />} />
-      <Route path="/Loginform" element={<Loginform />} />
+      <Route path="/dashboard" element={<BuyerDashboard />} />
+      <Route path="/marketplace" element={<BuyerDashboard />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path={ROUTES.home} element={<LandingPage />} />
       <Route path={ROUTES.dashboard} element={<BuyerDashboard />} />
       <Route path={ROUTES.login} element={<BuyerLogin />} />
-      <Route path={ROUTES.register} element={<BuyerRegistration />} />
+      <Route path={ROUTES.register} element={<BuyerForm />} />
+      <Route path="/buyer-login" element={<BuyerLogin />} />
+      <Route path="/buyer-registration" element={<BuyerForm />} />
       <Route path="/login" element={<BuyerLogin />} />
-      <Route path="/register" element={<BuyerRegistration />} />
-      <Route path="/marketplace" element={<BuyerDashboard />} />
-      <Route path="/home" element={<LandingPage />} />
-      <Route path="/Login" caseSensitive element={<Login />} />
-      <Route path="/Buyerform" element={<BuyerRegistration />} />
-      <Route path="/Loginform" element={<BuyerLogin />} />
+      <Route path="/register" element={<BuyerForm />} />
+      <Route path="/Login" caseSensitive element={<FarmerRegistration />} />
     </Routes>
   );
 }
