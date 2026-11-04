@@ -593,6 +593,10 @@ function Icon({ name, size = 18, fill = 'none' }) {
   };
 
   return <svg {...common}>{icons[name] || null}</svg>;
+import AppRoutes from "./approute/AppRoutes";
+
+function App() {
+  return <AppRoutes />;
 }
 
 export default App;
