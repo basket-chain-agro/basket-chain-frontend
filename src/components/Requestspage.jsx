@@ -193,13 +193,13 @@ const navItems = [
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-white text-gray-900 md:flex-row">
         <aside className="order-2 flex w-full shrink-0 items-center justify-around border-t border-gray-100
-        bg-white px-2 py-2 md:order-1 md:h-screen md:w-28 md:flex-col md:justify-start md:border-t-0 md:py-6">
+        bg-white px-2 py-2 md:order-1 md:h-screen md:w-28 md:flex-col md:justify-start md:overflow-y-auto md:border-t-0 md:py-6">
         <img 
         src="/logo.png"
         alt="Basket Chain"
-        className="hidden h-10 w-10 object-contain md:block" />
+        className="hidden h-10 w-10 shrink-0 object-contain md:mb-12 md:block" />
 
-            <nav className="flex w-full justify-around md:mt-40 md:w-auto md:flex-col md:items-center md:gap-14">
+            <nav className="flex w-full justify-around md:my-auto md:w-auto md:flex-col md:items-center md:gap-6 lg:gap-10 xl:gap14">
                 {navItems.map((item) => 
                 <a
                 key={item.label}
@@ -268,7 +268,7 @@ const navItems = [
       >
         {tab}
       </button>
-    ))}
+    ))} 
   </div>
 
     <div className="flex w-full  items-center gap-2 md:w-auto">
